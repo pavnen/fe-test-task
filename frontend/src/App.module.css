@@ -1,0 +1,10 @@
+.gameContainer {
+  margin: 40px;
+  font-family: OpenSans;
+  text-align: center;
+}
+
+.gameContainer .gameContainerHeader {
+  font-size: 24px;
+  font-weight: bold;
+}
