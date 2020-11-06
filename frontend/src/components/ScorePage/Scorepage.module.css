@@ -1,0 +1,22 @@
+.scoreCaption {
+    margin-bottom: 20px;
+    font-weight: bolder;
+}
+
+.player {
+    color: var(--player-color);
+}
+
+.ai {
+    color: var(--ai-color);
+}
+
+.table {
+    max-width: 800px;
+    margin: auto;
+}
+
+.table th,
+.table td {
+    min-width: 160px;
+}

@@ -1,11 +1,51 @@
-.row {
-
+:global(:root) {
+  --field-border-color: crimson
 }
 
-.row .cell {
+.boardWrapper {
+  justify-content: center;
+  margin: 20px 0 40px;
+}
+
+.row {
+  display: flex;
+  border-top: 1px solid var(--field-border-color);
+  border-bottom: 1px solid var(--field-border-color);
+  width: fit-content;
+}
+
+.row:first-of-type {
+  border-top: none;
+}
+
+.row:last-of-type {
+  border-bottom: none;
+}
+
+.cell {
   display: inline-block;
   cursor: pointer;
   width: 60px;
   height: 60px;
-  border: 1px solid red;
+  border-left: 1px solid var(--field-border-color);
+  border-right: 1px solid var(--field-border-color);
+  font-size: 24px;
+  font-family: Arial;
+  line-height: 60px;
+}
+
+.cell:first-of-type {
+  border-left: none;
+}
+
+.cell:last-of-type {
+  border-right: none;
+}
+
+.player {
+    color: var(--player-color);
+}
+
+.ai {
+    color: var(--ai-color);
 }

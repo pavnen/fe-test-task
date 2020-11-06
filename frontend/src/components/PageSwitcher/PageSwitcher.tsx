@@ -9,14 +9,20 @@ export interface PageSwitcherPage {
 }
 
 export interface PageSwitcherProps {
-  initialPage?: string
+  currentPage?: string
   pages: PageSwitcherPage[]
 }
 
-export const PageSwitcher: React.FC<PageSwitcherProps> = ({initialPage, pages}) => (
-  <ButtonGroup size={'lg'}>
+export const PageSwitcher: React.FC<PageSwitcherProps> = ({currentPage, pages}) => (
+  <ButtonGroup className={styles.pageSwitcherWrapper} size={'lg'}>
     {pages.map(
-      page => <Button active={page.title === initialPage} onClick={page.callback} variant={'secondary'}>{page.title}</Button>
-    )}
+      page => (
+        <Button
+          active={page.title === currentPage}
+          className={styles.pageSwitcherButton}
+          onClick={page.callback}
+          variant={'secondary'}>{page.title}
+        </Button>
+      ))}
   </ButtonGroup>
 )

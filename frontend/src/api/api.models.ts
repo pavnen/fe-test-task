@@ -6,7 +6,7 @@ export interface ApiResponse<ResultType = any> {
 
 export type ZeroOrCross = 'X' | '0'
 
-export type Board = number[][]
+export type Board = (number | string)[][]
 
 interface GameResult {
   winner: string,

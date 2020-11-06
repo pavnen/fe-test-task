@@ -1,43 +1,52 @@
 import React, {useEffect, useState} from 'react'
-import {ScoreResponse} from '../../api/api.models'
+import {Col, Row, Table} from 'react-bootstrap'
+import {ScoreResponse} from '../../api'
+
+import styles from './Scorepage.module.css'
 
 export interface ScorePageProps {
+  score: ScoreResponse | null
   getScore: () => Promise<ScoreResponse | void>
 }
 
-export const ScorePage: React.FC<ScorePageProps> = ({getScore}) => {
-  const [score, setScore] = useState<ScoreResponse | null>(null)
+const getWinnerClass = (winner: string) => styles[winner]
 
+export const ScorePage: React.FC<ScorePageProps> = ({score, getScore}) => {
   useEffect(() => {
-    getScore().then(
-      res => res && setScore(res)
-    )
+    getScore()
   }, [getScore])
+
+  if (!score) return null
 
   return (
     <>
-      {
-        score
-          ?
-          <div>
-            <div>AI wins: {score.ai}</div>
-            <div>Human wins: {score.player}</div>
-            <h2>Games:</h2>
-            {score.list.length > 0
-              ? <ul>
-                {score.list.map((game ) => (
-                  <li key={game.ts}>
-                    <div>{(new Date(game.ts)).toLocaleString()}</div>
-                    <div>winner: {game.winner}</div>
-                    <div>team: {game.team}</div>
-                  </li>
-                ))}
-              </ul>
-              : <span>No games played...</span>
-            }
-          </div>
-          : <span>No Scores...</span>
+      <Row className={styles.scoreCaption}>
+        <Col className={styles.ai} sm={6}>AI wins: {score.ai}</Col>
+        <Col className={styles.player} sm={6}>Human wins: {score.player}</Col>
+      </Row>
+      <Row>
+      {score.list.length > 0
+        ? <Table className={styles.table} striped size="sm">
+          <thead>
+            <tr>
+               <th>Date/Time</th>
+              <th>Winner</th>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            {score.list.map((game ) => (
+              <tr key={game.ts}>
+                <td>{(new Date(game.ts)).toLocaleString()}</td>
+                <td className={getWinnerClass(game.winner)}>{game.winner || '—'}</td>
+                <td>{game.team || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+          </Table>
+        : <span>No games played...</span>
       }
+      </Row>
     </>
   )
 }

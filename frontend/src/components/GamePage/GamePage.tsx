@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react'
-import {Button} from 'react-bootstrap'
+import {Button, Col, Row} from 'react-bootstrap'
+import classnames from 'classnames'
 import {GameResponse} from '../../api/api.models'
+import {isEmptyCell, getCellSymbol} from './GamePage.utils'
 
 import styles from './GamePage.module.css'
 
@@ -10,8 +12,6 @@ export interface GamePageProps {
   moveCallback: (cell: number) => Promise<GameResponse | void>
   resetCallback: () => Promise<GameResponse | void>
 }
-
-const isEmptyCell = (cell: number | string) => typeof cell === "number"
 
 export const GamePage: React.FC<GamePageProps> = ({
     game,
@@ -33,19 +33,37 @@ export const GamePage: React.FC<GamePageProps> = ({
 
   return (
     <>
-      <div>
-        {game.board.map((row, rowIndex) => (
-          <div className={styles.row} key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <div className={styles.cell} key={`${rowIndex}-${cellIndex}`} onClick={moveCallbackFactory(cell)}>
-                {typeof cell !== 'number' ? cell : '-'}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      {game?.end && <span>{game?.winner ? `${game.winner} won!` : 'Game Over!'}</span>}
-      <Button onClick={resetCallback}>Reset</Button>
+      <Row className={styles.boardWrapper}>
+        <div>
+          {game.board.map((row, rowIndex) => (
+            <div className={styles.row} key={rowIndex}>
+              {row.map((cell, cellIndex) => {
+                const cellClass = classnames(styles.cell, {[styles.ai]: (cell === game.ai), [styles.player]: (cell === game.player)})
+                const cellCallback = moveCallbackFactory(cell)
+                return (
+                  <div
+                    className={cellClass}
+                    key={`${rowIndex}-${cellIndex}`}
+                    onClick={cellCallback}
+                  >
+                    {getCellSymbol(cell)}
+                  </div>
+                )
+              })}
+            </div>
+          ))}
+        </div>
+      </Row>
+      <Row className="justify-content-sm-center">
+        {game?.end &&
+          <Col md="auto">
+            <span>{game?.winner ? `${game.winner} won!` : 'Game Over!'}</span>
+          </Col>
+        }
+        <Col md="auto">
+          <Button onClick={resetCallback}>Reset</Button>
+        </Col>
+      </Row>
     </>
   )
 }

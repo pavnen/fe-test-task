@@ -1,2 +1,7 @@
+.pageSwitcherWrapper {
+  margin-bottom: 20px;
+}
 
-
+.pageSwitcherButton {
+  text-transform: uppercase;
+}
