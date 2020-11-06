@@ -12,7 +12,7 @@ const client = (url: string, options: RequestInit) => {
   return fetch(`${BASE_API_URL}/${url}`, {...options, headers})
     .then(response => response.json())
     .then(getResult)
-    .catch(err => console.error(err))
+    .catch(err => {throw err})
 }
 
 const get = (url: string, options: RequestInit = {}) => client(url, {...options, method: 'GET'})

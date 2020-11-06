@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react'
-import {Container} from 'react-bootstrap'
+import {Container, Toast} from 'react-bootstrap'
 import {PageSwitcher} from '../PageSwitcher/PageSwitcher'
 import {ScorePage} from '../ScorePage/ScorePage'
 import {GamePage} from '../GamePage/GamePage'
@@ -16,6 +16,9 @@ export const GameContainer: React.FC = () => {
   const [pageToShow, setPageToShow] = useState<PageToShow>(PageToShow.Game)
   const [game, setGame] = useState<GameResponse | null>(null)
   const [score, setScore] = useState<ScoreResponse | null>(null)
+  const [alert, setAlert] = useState<string | undefined>()
+
+  const closeAlert = useCallback(() => setAlert(undefined), [])
 
   const updateGame = (gameResponse: GameResponse | void) => {
     if (gameResponse) {
@@ -27,11 +30,19 @@ export const GameContainer: React.FC = () => {
 
   const reset = useCallback(() => api.reset().then(updateGame), [])
 
-  const move = useCallback((cell: number) => api.move(cell).then(updateGame), [])
+  const errorHandler = (err: Error) => setAlert(err.message || 'Server error...')
 
-  const getScore = useCallback(() => api.score().then(
-    res => res && setScore(res)
-  ), [])
+  const move = useCallback((cell: number) =>
+    api.move(cell)
+      .then(updateGame)
+      .catch(errorHandler)
+    , [])
+
+  const getScore = useCallback(() =>
+    api.score()
+      .then(res => res && setScore(res))
+      .catch(errorHandler)
+    ,[])
 
   const pageDescriptions = [
     {title: 'game', callback: () => setPageToShow(PageToShow.Game)},
@@ -40,6 +51,17 @@ export const GameContainer: React.FC = () => {
 
   return (
     <Container>
+      {alert &&
+        <Toast
+          autohide
+          className={styles.toast}
+          delay={3000}
+          onClose={closeAlert}
+        >
+          <Toast.Header>Error!</Toast.Header>
+          <Toast.Body>{alert}</Toast.Body>
+        </Toast>
+      }
       <header className={styles.gameContainerHeader}>The tic-tac-toe game</header>
       <PageSwitcher currentPage={pageToShow} pages={pageDescriptions} />
         {

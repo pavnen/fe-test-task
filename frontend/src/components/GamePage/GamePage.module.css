@@ -42,6 +42,10 @@
   border-right: none;
 }
 
+.result {
+  padding: 5px;
+}
+
 .player {
     color: var(--player-color);
 }

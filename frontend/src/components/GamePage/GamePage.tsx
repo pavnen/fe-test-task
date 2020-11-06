@@ -22,7 +22,7 @@ export const GamePage: React.FC<GamePageProps> = ({
 
   useEffect(() => {
       getBoardCallback()
-    }, [])
+    }, [getBoardCallback])
 
   if (!game) {
     return <div>'Waiting for board...'</div>
@@ -56,7 +56,7 @@ export const GamePage: React.FC<GamePageProps> = ({
       </Row>
       <Row className="justify-content-sm-center">
         {game?.end &&
-          <Col md="auto">
+          <Col className={styles.result} md="auto">
             <span>{game?.winner ? `${game.winner} won!` : 'Game Over!'}</span>
           </Col>
         }
