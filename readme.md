@@ -13,6 +13,8 @@ Dev server will be available at `http//localhost:3003`
 - customize linter rules
 - use some router for pages
 - add some animations
+- add pagination on the score pages
+- add transformers layer to make app extention easy
 
 Test assignment for the front-end developer position applicants
 ----
