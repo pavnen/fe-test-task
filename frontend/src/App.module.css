@@ -1,6 +1,6 @@
 :global(:root) {
   --ai-color: blueviolet;
-  --player-color: darkgreen
+  --player-color: darkgreen;
 }
 
 .app {

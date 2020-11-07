@@ -1,3 +1,19 @@
+There is the implementation of test assignment described below
+----
+
+To start the app you can run it with `npm start` and see result on `http//localhost:3000`
+In this case front-end and back-end applications will be built before start
+
+And you can run front-end dev server at `/frontend` with `npm start` script.
+Dev server will be available at `http//localhost:3003`
+
+#TODOs:
+
+- better test coverage
+- customize linter rules
+- use some router for pages
+- add some animations
+
 Test assignment for the front-end developer position applicants
 ----
 This repository contains the back-end component for a game of **tic-tac-toe** against the AI. Your assignment is to develop the front-end.

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <header
+      class="gameContainerHeader"
+    >
+      The tic-tac-toe game
+    </header>
+    <div
+      class="pageSwitcherWrapper btn-group btn-group-lg"
+      role="group"
+    >
+      <button
+        class="pageSwitcherButton btn active btn-secondary"
+        type="button"
+      >
+        game
+      </button>
+      <button
+        class="pageSwitcherButton btn btn-secondary"
+        type="button"
+      >
+        score
+      </button>
+    </div>
+    <div>
+      'Waiting for board...'
+    </div>
+  </div>
+</div>
+`;

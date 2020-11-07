@@ -32,17 +32,16 @@ export const GameContainer: React.FC = () => {
 
   const errorHandler = (err: Error) => setAlert(err.message || 'Server error...')
 
-  const move = useCallback((cell: number) =>
-    api.move(cell)
-      .then(updateGame)
-      .catch(errorHandler)
-    , [])
+  const move = useCallback((cell: number) => api.move(cell).then(updateGame).catch(errorHandler), [])
 
-  const getScore = useCallback(() =>
-    api.score()
-      .then(res => res && setScore(res))
-      .catch(errorHandler)
-    ,[])
+  const getScore = useCallback(
+    () =>
+      api
+        .score()
+        .then(res => res && setScore(res))
+        .catch(errorHandler),
+    []
+  )
 
   const pageDescriptions = [
     {title: 'game', callback: () => setPageToShow(PageToShow.Game)},
@@ -51,29 +50,19 @@ export const GameContainer: React.FC = () => {
 
   return (
     <Container>
-      {alert &&
-        <Toast
-          autohide
-          className={styles.toast}
-          delay={3000}
-          onClose={closeAlert}
-        >
+      {alert && (
+        <Toast autohide className={styles.toast} delay={3000} onClose={closeAlert}>
           <Toast.Header>Error!</Toast.Header>
           <Toast.Body>{alert}</Toast.Body>
         </Toast>
-      }
+      )}
       <header className={styles.gameContainerHeader}>The tic-tac-toe game</header>
       <PageSwitcher currentPage={pageToShow} pages={pageDescriptions} />
-        {
-          pageToShow === PageToShow.Game
-            ? <GamePage
-                game={game}
-                getBoardCallback={getGame}
-                moveCallback={move}
-                resetCallback={reset}
-            />
-            : <ScorePage score={score} getScore={getScore} />
-        }
+      {pageToShow === PageToShow.Game ? (
+        <GamePage game={game} getBoardCallback={getGame} moveCallback={move} resetCallback={reset} />
+      ) : (
+        <ScorePage score={score} getScore={getScore} />
+      )}
     </Container>
   )
 }

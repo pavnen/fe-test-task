@@ -1,7 +1,7 @@
 import {ApiResponse, ScoreResponse, GameResponse} from './api.models'
 import {BASE_API_URL, GAME_URL, MOVE_URL, RESET_URL, SCORE_URL} from '../constants/urls'
 
-const getResult = (response: ApiResponse) => response.ok ? response.result : Promise.reject(response.error)
+const getResult = (response: ApiResponse) => (response.ok ? response.result : Promise.reject(response.error))
 
 const client = (url: string, options: RequestInit) => {
   const defaultHeaders = {
@@ -9,15 +9,17 @@ const client = (url: string, options: RequestInit) => {
   }
   const headers = {...options.headers, ...defaultHeaders}
 
-  return fetch(`${BASE_API_URL}/${url}`, {...options, headers})
+  return fetch(`${process.env.REACT_APP_API_BASE}${BASE_API_URL}/${url}`, {...options, headers})
     .then(response => response.json())
     .then(getResult)
-    .catch(err => {throw err})
+    .catch(err => {
+      throw err
+    })
 }
 
 const get = (url: string, options: RequestInit = {}) => client(url, {...options, method: 'GET'})
 
-const post  = (url: string, options: RequestInit = {}) => client(url, {...options, method: 'POST'})
+const post = (url: string, options: RequestInit = {}) => client(url, {...options, method: 'POST'})
 
 const score = (): Promise<ScoreResponse | void> => get(SCORE_URL)
 

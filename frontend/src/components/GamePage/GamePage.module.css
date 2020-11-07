@@ -1,5 +1,5 @@
 :global(:root) {
-  --field-border-color: crimson
+  --field-border-color: crimson;
 }
 
 .boardWrapper {
@@ -47,9 +47,9 @@
 }
 
 .player {
-    color: var(--player-color);
+  color: var(--player-color);
 }
 
 .ai {
-    color: var(--ai-color);
+  color: var(--ai-color);
 }

@@ -2,7 +2,7 @@ const X_SYMBOL = 'X'
 const O_SYMBOL = 'O'
 const EMPTY_SYMBOL = '-'
 
-export const isEmptyCell = (cell: number | string) => typeof cell === "number"
+export const isEmptyCell = (cell: number | string) => typeof cell === 'number'
 
 export const getCellSymbol = (cell: number | string) => {
   switch (cell) {
