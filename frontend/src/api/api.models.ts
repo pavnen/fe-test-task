@@ -18,7 +18,7 @@ export interface ScoreResponse {
   ai: number
   player: number
   X: number
-  '0': number
+  O: number
   list: GameResult[]
 }
 

@@ -28,6 +28,14 @@ export const ScorePage: React.FC<ScorePageProps> = ({score, getScore}) => {
           Human wins: {score.player}
         </Col>
       </Row>
+      <Row className={styles.scoreCaption}>
+        <Col sm={6}>
+          X wins: {score.X}
+        </Col>
+        <Col sm={6}>
+          O wins: {score.O}
+        </Col>
+      </Row>
       <Row>
         {score.list.length > 0 ? (
           <Table className={styles.table} striped size="sm">

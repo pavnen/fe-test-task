@@ -9,3 +9,5 @@ export const GAME_URL = GAME_API_URL
 export const MOVE_URL = `${GAME_API_URL}/move`
 
 export const RESET_URL = `${GAME_API_URL}/reset`
+
+export const NEXT_URL = `${GAME_API_URL}/next`

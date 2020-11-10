@@ -7,6 +7,8 @@ import {api, GameResponse, ScoreResponse} from '../../api'
 
 import styles from './GameContainer.module.css'
 
+const ALERT_DISAPPEAR_DELAY_MS = 3000
+
 export enum PageToShow {
   Game = 'game',
   Score = 'score'
@@ -30,6 +32,8 @@ export const GameContainer: React.FC = () => {
 
   const reset = useCallback(() => api.reset().then(updateGame), [])
 
+  const next = useCallback(() => api.next().then(updateGame).catch(errorHandler), [])
+
   const errorHandler = (err: Error) => setAlert(err.message || 'Server error...')
 
   const move = useCallback((cell: number) => api.move(cell).then(updateGame).catch(errorHandler), [])
@@ -51,7 +55,7 @@ export const GameContainer: React.FC = () => {
   return (
     <Container>
       {alert && (
-        <Toast autohide className={styles.toast} delay={3000} onClose={closeAlert}>
+        <Toast autohide className={styles.toast} delay={ALERT_DISAPPEAR_DELAY_MS} onClose={closeAlert}>
           <Toast.Header>Error!</Toast.Header>
           <Toast.Body>{alert}</Toast.Body>
         </Toast>
@@ -59,7 +63,7 @@ export const GameContainer: React.FC = () => {
       <header className={styles.gameContainerHeader}>The tic-tac-toe game</header>
       <PageSwitcher currentPage={pageToShow} pages={pageDescriptions} />
       {pageToShow === PageToShow.Game ? (
-        <GamePage game={game} getBoardCallback={getGame} moveCallback={move} resetCallback={reset} />
+        <GamePage game={game} getBoardCallback={getGame} moveCallback={move} nextCallback={next} resetCallback={reset} />
       ) : (
         <ScorePage score={score} getScore={getScore} />
       )}

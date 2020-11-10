@@ -10,10 +10,17 @@ export interface GamePageProps {
   game?: GameResponse | null
   getBoardCallback: () => Promise<GameResponse | void>
   moveCallback: (cell: number) => Promise<GameResponse | void>
+  nextCallback: () => Promise<GameResponse | void>
   resetCallback: () => Promise<GameResponse | void>
 }
 
-export const GamePage: React.FC<GamePageProps> = ({game, getBoardCallback, moveCallback, resetCallback}) => {
+export const GamePage: React.FC<GamePageProps> = ({
+  game,
+  getBoardCallback,
+  moveCallback,
+  nextCallback,
+  resetCallback
+}) => {
   useEffect(() => {
     getBoardCallback()
   }, [getBoardCallback])
@@ -54,7 +61,7 @@ export const GamePage: React.FC<GamePageProps> = ({game, getBoardCallback, moveC
           </Col>
         )}
         <Col md="auto">
-          <Button onClick={resetCallback}>Reset</Button>
+          {game?.end ? <Button onClick={nextCallback}>Next</Button> : <Button onClick={resetCallback}>Reset</Button>}
         </Col>
       </Row>
     </>

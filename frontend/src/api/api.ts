@@ -1,5 +1,5 @@
 import {ApiResponse, ScoreResponse, GameResponse} from './api.models'
-import {BASE_API_URL, GAME_URL, MOVE_URL, RESET_URL, SCORE_URL} from '../constants/urls'
+import {BASE_API_URL, GAME_URL, MOVE_URL, NEXT_URL, RESET_URL, SCORE_URL} from '../constants/urls'
 
 const getResult = (response: ApiResponse) => (response.ok ? response.result : Promise.reject(response.error))
 
@@ -29,9 +29,12 @@ const move = (index: number): Promise<GameResponse | void> => post(MOVE_URL, {bo
 
 const reset = (): Promise<GameResponse | void> => post(RESET_URL)
 
+const next = (): Promise<GameResponse | void> => get(NEXT_URL)
+
 export const api = {
   game,
   move,
+  next,
   reset,
   score
 }
